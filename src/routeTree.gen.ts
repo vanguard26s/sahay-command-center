@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DispatchRouteImport } from './routes/dispatch'
 import { Route as MapRouteImport } from './routes/map'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as SegregatedRouteImport } from './routes/segregated'
@@ -19,6 +20,11 @@ import { Route as IncidentsIncidentIdRouteImport } from './routes/incidents/$inc
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DispatchRoute = DispatchRouteImport.update({
+  id: '/dispatch',
+  path: '/dispatch',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MapRoute = MapRouteImport.update({
@@ -49,6 +55,7 @@ const IncidentsIncidentIdRoute = IncidentsIncidentIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dispatch': typeof DispatchRoute
   '/map': typeof MapRoute
   '/resources': typeof ResourcesRoute
   '/segregated': typeof SegregatedRoute
@@ -57,6 +64,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/dispatch': typeof DispatchRoute
   '/map': typeof MapRoute
   '/resources': typeof ResourcesRoute
   '/segregated': typeof SegregatedRoute
@@ -66,6 +74,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/dispatch': typeof DispatchRoute
   '/map': typeof MapRoute
   '/resources': typeof ResourcesRoute
   '/segregated': typeof SegregatedRoute
@@ -76,6 +85,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/dispatch'
     | '/map'
     | '/resources'
     | '/segregated'
@@ -84,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/dispatch'
     | '/map'
     | '/resources'
     | '/segregated'
@@ -92,6 +103,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/dispatch'
     | '/map'
     | '/resources'
     | '/segregated'
@@ -101,6 +113,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DispatchRoute: typeof DispatchRoute
   MapRoute: typeof MapRoute
   ResourcesRoute: typeof ResourcesRoute
   SegregatedRoute: typeof SegregatedRoute
@@ -115,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dispatch': {
+      id: '/dispatch'
+      path: '/dispatch'
+      fullPath: '/dispatch'
+      preLoaderRoute: typeof DispatchRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/map': {
@@ -157,6 +177,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DispatchRoute: DispatchRoute,
   MapRoute: MapRoute,
   ResourcesRoute: ResourcesRoute,
   SegregatedRoute: SegregatedRoute,
