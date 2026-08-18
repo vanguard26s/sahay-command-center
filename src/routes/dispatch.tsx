@@ -24,7 +24,7 @@ export const Route = createFileRoute("/dispatch")({
       },
     ],
   }),
-  component: DispatchConsole;
+  component: DispatchConsole,
 });
 
 type Line = { role: "officer" | "ai"; text: string; pending?: boolean };
